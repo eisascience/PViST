@@ -7,6 +7,7 @@ library(shiny)
 library(shinydashboard)
 library(shinyFiles)
 library(ggplot2)
+library(plotly)
 library(data.table)
 library(ggrepel)
 library(viridis)
@@ -18,6 +19,9 @@ require(dplyr)
 library(ggrastr)
 library(ggpubr)
 library(BiocParallel)
+library(scCustFx)
+library(Seurat)
+library(SeuratDisk)
 
 register(MulticoreParam(4))
 # LocalRun=T
@@ -36,7 +40,7 @@ ui <- dashboardPage(
     sidebarMenu(
       menuItem("0. Load Object", tabName = "LoadInDash", icon = icon("dashboard"),
                badgeLabel = "underdev", badgeColor = "red"),
-      # menuItem("QC plots", tabName = "QCplots", icon = icon("wrench")),
+      menuItem("1. QC plots", tabName = "QCplots", icon = icon("wrench")),
       # menuItem("Batch removal", tabName = "BatchRemove", icon = icon("toolbox")),
       # menuItem("DGE Batch-Removed", tabName = "DGEsda", icon = icon("autoprefixer")),
       # menuItem("Gene Explorer", tabName = "GeneExplorer", icon = icon("dna")),
@@ -85,13 +89,33 @@ ui <- dashboardPage(
                 
                 box(textInput("LoadInroot", "Path to folders. Expects a processed seurat in the new hd5 format.", 
                               value =init.path),
-                    uiOutput("select.folder"),
+                    uiOutput("select.file"),
+                    uiOutput("select.meta.cols"),
                     actionButton("loadSerObj", "0. Load Seurat Obj"),
                     width = 10
                 ),
                 
               ),
-              )
+              ),
+      
+      tabItem(tabName = "QCplots",
+              h2("QA QC plots"),
+              fluidRow(
+                box(
+                  title = "transcript and umi counts:", status = "primary", solidHeader = TRUE,
+                  collapsible = TRUE,
+                  plotlyOutput("DimRedux_unsup", height = 500),
+                  plotOutput("spatialDimplot", height = 500),
+                  plotOutput("nCountSpatial", height = 500),
+                  plotOutput("nFeatureSpatial", height = 500), 
+                  plotOutput("nCountSpatialVsnFeature_Spatial", height = 500), 
+                 
+                  
+                  width = 10, background = "black"
+                )
+                
+              ),
+      )
       )
     )
   )

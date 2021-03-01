@@ -1,31 +1,24 @@
 function(input, output, session) {
+  source("app_ObserveEvents.R",local = TRUE)
+  source("app_RenderPlots.R",local = TRUE)
+  source("app_mcsl.R",local = TRUE)
+  
   shinyFileChoose(input,'file', session=session,roots=c(wd='.'))
   
   envv=reactiveValues(y=NULL)
   envv$InfoBox_sub = "Welcome to PViST.\nStart by picking a species."
   
-  
-  output$select.folder <-
-    renderUI(expr = selectInput(inputId = 'folder.name',
-                                label = 'Folder Name',
-                                choices = list.dirs(path = input$LoadInroot,
+  output$select.file <-
+    renderUI(expr = selectInput(inputId = 'file.name',
+                                label = 'File Name',
+                                choices = list.files(path = input$LoadInroot,
                                                     full.names = FALSE,
                                                     recursive = FALSE)))
   
+
+ 
+
   
-  
-  
-  ## Main tab--------------------------------------
-  
-  
-  output$InfoBox <- renderValueBox({
-    valueBox(
-      value = "Info Bar", #format(Sys.time(), "%a %b %d %X %Y %Z"),
-      subtitle = envv$InfoBox_sub,
-      icon = icon("area-chart"),
-      color = "yellow" #if (downloadRate >= input$rateThreshold) "yellow" else "aqua"
-    )
-  })
   
   
 }
