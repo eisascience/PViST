@@ -1,7 +1,7 @@
 
 ### render plots ========================
 
-output$DimRedux_unsup <- renderPlotly({
+output$DimRedux_unsup_umap_qc <- renderPlotly({
   # print(output$serObj_metaFeats)
   Idents(envv$SerObj) = input$meta.cols
   # cowplot::plot_grid(DimPlot(envv$SerObj, reduction = "umap", label = TRUE) + theme_bw()  ,
@@ -40,4 +40,11 @@ output$nCountSpatialVsnFeature_Spatial <- renderPlot({
   FeatureScatter(envv$SerObj, feature1 =  "log_nCount_Spatial", feature2 = "log_nFeature_Spatial") + 
     ggtitle("log_nCount_Spatial vs log_nFeature_Spatial")
   
+})
+
+
+output$FeatPlot_umap <- renderPlot({
+
+  FeaturePlot(envv$SerObj, reduction = "umap", features = input$GeneName )
+
 })

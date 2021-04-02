@@ -30,7 +30,12 @@ register(MulticoreParam(4))
 if (Sys.getenv("SCRATCH_DIR") != "") {
   init.path = paste0(Sys.getenv("SCRATCH_DIR"), "/data")
 }  else {
-  init.path = getwd()
+  if(Sys.getenv()[["LOGNAME"]]=="fem") {
+    init.path = 
+      "/Volumes/Maggie/Work/OHSU/Conrad/R/SpatialOmics/MammalianSpermatogenesis/data/SeuratObjects" 
+    } else {
+    init.path = getwd()
+      }
 }
 
 
@@ -41,9 +46,9 @@ ui <- dashboardPage(
       menuItem("0. Load Object", tabName = "LoadInDash", icon = icon("dashboard"),
                badgeLabel = "underdev", badgeColor = "red"),
       menuItem("1. QC plots", tabName = "QCplots", icon = icon("wrench")),
+      menuItem("2. Gene Explorer", tabName = "GeneExplorer", icon = icon("dna")),
       # menuItem("Batch removal", tabName = "BatchRemove", icon = icon("toolbox")),
       # menuItem("DGE Batch-Removed", tabName = "DGEsda", icon = icon("autoprefixer")),
-      # menuItem("Gene Explorer", tabName = "GeneExplorer", icon = icon("dna")),
       # menuItem("Save Out", tabName = "SaveOut", icon = icon("save")),
       menuItem("Conrad Lab", icon = icon("file-code-o"), 
                href = "https://conradlab.org"),
@@ -73,6 +78,7 @@ ui <- dashboardPage(
           }
                       "))),
     tabItems(
+      
       tabItem(tabName = "LoadInDash",
               h2("Platform for exploration, analysis, & Visualization of Spatial Transcriptomes (PViST)"),
               fluidRow(
@@ -90,13 +96,14 @@ ui <- dashboardPage(
                 box(textInput("LoadInroot", "Path to folders. Expects a processed seurat in the new hd5 format.", 
                               value =init.path),
                     uiOutput("select.file"),
-                    uiOutput("select.meta.cols"),
                     actionButton("loadSerObj", "0. Load Seurat Obj"),
                     width = 10
                 ),
                 
               ),
-              ),
+              ), #end of tabitem
+      
+      
       
       tabItem(tabName = "QCplots",
               h2("QA QC plots"),
@@ -104,7 +111,8 @@ ui <- dashboardPage(
                 box(
                   title = "transcript and umi counts:", status = "primary", solidHeader = TRUE,
                   collapsible = TRUE,
-                  plotlyOutput("DimRedux_unsup", height = 500),
+                  uiOutput("select.meta.cols"),
+                  plotlyOutput("DimRedux_unsup_umap_qc", height = 500),
                   plotOutput("spatialDimplot", height = 500),
                   plotOutput("nCountSpatial", height = 500),
                   plotOutput("nFeatureSpatial", height = 500), 
@@ -115,7 +123,26 @@ ui <- dashboardPage(
                 )
                 
               ),
-      )
+      ), #end of tabitem
+      
+      tabItem(tabName = "GeneExplorer",
+              h2("Gene Explorer"),
+              fluidRow(
+                box(
+                  title = "Normalized gene expression", status = "primary", solidHeader = TRUE,
+                  collapsible = TRUE,
+                  textInput("GeneName", "Gene name (capitalization matters)", 
+                            value ="Sox9"),
+                  plotOutput("FeatPlot_umap", height = 500),
+                  
+         
+                  
+                  width = 10, background = "black"
+                )
+                
+              ),
+      ) #end of tabitem
+      
       )
     )
   )

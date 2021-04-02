@@ -27,10 +27,7 @@ observeEvent(input$loadSerObj, {
                                       "log_nCount_Spatial", "nCount_SCT",
                                       "nFeature_SCT"))
     
-    output$select.meta.cols <-
-      renderUI(expr = selectInput(inputId = 'meta.cols',
-                                  label = 'Avl. Meta',
-                                  choices = envv$serObj_metaFeats))
+   
     
     
     # print(envv$serObj_metaFeats)
@@ -45,4 +42,14 @@ observeEvent(input$loadSerObj, {
     
   }
 })
+
+observeEvent(envv$serObj_metaFeats, {
+  if(!is.null(envv$serObj_metaFeats)){
+    output$select.meta.cols <-
+      renderUI(expr = selectInput(inputId = 'meta.cols',
+                                  label = 'Avl. Meta',
+                                  choices = envv$serObj_metaFeats))
+  }
+})
+
 
