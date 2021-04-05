@@ -48,3 +48,14 @@ output$FeatPlot_umap <- renderPlot({
   FeaturePlot(envv$SerObj, reduction = "umap", features = input$GeneName )
 
 })
+
+output$SpatialFeaturePlot_usrIn1 <- renderPlot({
+  
+  SpatialFeaturePlot(envv$SerObj, 
+                     features = input$GeneName, 
+                     ncol = 1, 
+                     alpha = c(0.1, 1), 
+                     max.cutoff = "q98", min.cutoff = "q02")
+  
+})
+
