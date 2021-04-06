@@ -4,6 +4,8 @@ server <- function(input, output, session) {
   source("app_ObserveEvents.R",local = TRUE)
   source("app_RenderPlots.R",local = TRUE)
   source("app_mcsl.R",local = TRUE)
+  source("app_Reactive.R",local = TRUE)
+  
   
   shinyFileChoose(input,'file', session=session,roots=c(wd='.'))
   

@@ -6,7 +6,7 @@ ui <- dashboardPage(
                badgeLabel = "underdev", badgeColor = "red"),
       menuItem("1. QC plots", tabName = "QCplots", icon = icon("wrench")),
       menuItem("2a. Gene Explorer", tabName = "GeneExplorer", icon = icon("dna")),
-      menuItem("2b. Expression Correlation", tabName = "GeneExplorer", icon = icon("dna")), 
+      menuItem("2b. Expression Correlation", tabName = "GeneCor", icon = icon("dna")), 
       menuItem("3. Dim. Reduction", tabName = "DimRedux", icon = icon("dna")),
       menuItem("4. Unsup. Clustering", tabName = "UnsupClus", icon = icon("dna")),
       menuItem("5. Differential Expression", tabName = "DiffExpr", icon = icon("dna")),
@@ -94,7 +94,7 @@ ui <- dashboardPage(
                   title = "Normalized gene expression", status = "primary", solidHeader = TRUE,
                   collapsible = TRUE,
                   textInput("GeneName", "Gene name (capitalization matters)", 
-                            value ="SOX9"),
+                            value ="PRM1"),
 
                   width = 10, background = "black"
                 ),
@@ -113,6 +113,31 @@ ui <- dashboardPage(
                   width = 10, background = "black"
                 )
                 
+              ),
+      ), #end of tabitem
+      
+      tabItem(tabName = "GeneCor",
+              h2("Gene Correlation"),
+              fluidRow(
+                box(
+                  title = "2 genes", status = "primary", solidHeader = TRUE,
+                  collapsible = TRUE,
+                  textInput("GeneName1", "Gene name (capitalization matters)", 
+                            value ="PRM1"),
+                  textInput("GeneName2", "Gene name (capitalization matters)", 
+                            value ="PRM2"),
+                  plotOutput("FeatDuoScatter", height = 500),
+                  
+                  width = 10, background = "black"
+                ),
+                box(
+                  title = "More than 2 genes ", status = "primary", solidHeader = TRUE,
+                  collapsible = TRUE,
+                  textInput("GeneSetCor", "A set of genes", "'PRM1', 'SPATA42', 'SPRR4', 'NUPR2', 'HBZ', 'DYNLL2'"),
+                  plotOutput("FeatCor", height = 500),
+                  
+                  width = 10, background = "black"
+                )
               ),
       ), #end of tabitem
       

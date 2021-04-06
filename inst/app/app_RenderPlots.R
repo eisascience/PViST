@@ -59,3 +59,55 @@ output$SpatialFeaturePlot_usrIn1 <- renderPlot({
   
 })
 
+output$FeatDuoScatter<- renderPlot({
+  Idents(envv$SerObj) = input$meta.cols
+  FeatureScatter(envv$SerObj, feature1 = input$GeneName1, feature2 = input$GeneName2, plot.cor = T) + geom_smooth()
+  
+})
+
+
+
+
+output$FeatCor <- renderPlot({
+ 
+  cols <- colorRampPalette(c("navy", "dodgerblue",  "white", "gold", "red"))
+  
+  GeneSet <- input$GeneSetCor
+  
+  if(length(grep(",", GeneSet)) == 0){
+    
+    if(length(grep('"', GeneSet)) + length(grep("'", GeneSet))>0) {
+      GeneSet <- unlist(strsplit(gsub("'", '', gsub('"', '', GeneSet)), " "))
+    } else {
+      GeneSet <- unlist(strsplit(GeneSet, " "))
+    }
+    
+    #print(GeneSet)
+  }else {
+    GeneSet <- (unlist(strsplit(gsub(" ", "", gsub("'", '', gsub('"', '', GeneSet))), ",")))
+    #print(GeneSet)
+  }
+  
+  GeneSetNot <- GeneSet[!GeneSet %in% rownames(envv$SerObj)]
+  
+  print("length of your genes:")
+  print(length(GeneSet))
+  GeneSet <- GeneSet[GeneSet %in% rownames(envv$SerObj)]
+  print("length of your genes in this dataset:")
+  print(length(GeneSet))
+  
+  corM = cor(t(as.matrix(GetAssayData(envv$SerObj, slot = "data")[GeneSet,])))
+  print(head(corM))
+
+  
+  pheatmap::pheatmap(corM, #cellwidth = 3, cellheight = 3,
+                     #main = "monaco.label.fine \nEuc. dist WardD2 Clust",
+                     #color = cols(21), show_colnames = T,
+                     #clustering_distance_rows = "euclidean",
+                     #clustering_distance_cols = "euclidean", #euclidean
+                     #clustering_method = "ward.D2" , breaks = c(-1, -1*rev(1:9)/10,  0, 1:9/10, 1)
+                     )
+  
+
+  
+})

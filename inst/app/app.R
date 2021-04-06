@@ -45,9 +45,10 @@ if (Sys.getenv("SCRATCH_DIR") != "") {
 
 
 #######################
-system.file()
+
 source("app_gui.R",local = TRUE)
 source("app_server.R",local = TRUE)
+
 
 
 

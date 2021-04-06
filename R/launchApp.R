@@ -27,7 +27,7 @@
 #' @import dplyr
 
 #' 
-launchPVIST <- function(...) {
+launchPViST <- function(...) {
   ## runApp() does not work w shiny-server
   shinyAppDir(appDir = system.file("app", package = "PViST"))
   
