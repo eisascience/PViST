@@ -25,10 +25,14 @@
 #' @import ggpubr
 #' @import ggrastr
 #' @import dplyr
+#' @import scCustFx
+#' @import Seurat
+#' @import SeuratDisk
+#' @import bslib
 
 #' 
 launchPViST <- function(...) {
   ## runApp() does not work w shiny-server
-  shinyAppDir(appDir = system.file("app", package = "PViST"))
-  
+  # shinyAppDir(appDir = system.file("app", package = "PViST"))
+  shiny::runApp('inst/app')
 }

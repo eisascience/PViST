@@ -31,11 +31,12 @@ Imports:
     shinyFiles,
     stringr,
     viridis,
-    scCustFx
+    scCustFx,
+    CellMembrane
 Suggests:
     ggvis,
     devtools
 Remotes:
-    eisascience/scCustFx
-
+    eisascience/scCustFx,
+    bimberlabinternal/CellMembrane
     
