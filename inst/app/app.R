@@ -46,10 +46,8 @@ if (Sys.getenv("SCRATCH_DIR") != "") {
 
 #######################
 system.file()
-source(system.file('app/app_gui.R', package = 'PViST', mustWork = TRUE), local = TRUE)
-
-
-source(system.file('app/app_server.R', package = 'PViST', mustWork = TRUE), local = TRUE)
+source("app_gui.R",local = TRUE)
+source("app_server.R",local = TRUE)
 
 
 
