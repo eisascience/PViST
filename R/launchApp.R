@@ -29,10 +29,15 @@
 #' @import Seurat
 #' @import SeuratDisk
 #' @import bslib
+#' @import CellMembrane
+#' @import ggforce
+#' @import ggthemes
+
+
 
 #' 
 launchPViST <- function(...) {
   ## runApp() does not work w shiny-server
-  # shinyAppDir(appDir = system.file("app", package = "PViST"))
-  shiny::runApp('inst/app')
+  shinyAppDir(appDir = system.file("app", package = "PViST"))
+  # shiny::runApp('inst/app')
 }

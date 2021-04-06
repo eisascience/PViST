@@ -15,22 +15,29 @@ Depends:
     R (>= 3.5.0)
 biocViews:
 Imports:
-    BiocParallel,
-    data.table,
+   shiny,
+   shinydashboard,
+   shinyFiles,
+   ggplot2,
+   plotly,
+   data.table,
+   ggrepel,
+   viridis,
+   ggnewscale,
+   RColorBrewer,
+   grid,
+   gridExtra, 
+   ggrastr,
+   ggpubr,
+   BiocParallel,
+   Seurat,
+   SeuratDisk,
+   bslib,
     dplyr,
-    ggplot2,
     ggforce,
     ggthemes,
-    ggrepel,
-    grid,
-    gridExtra,
-    RColorBrewer,
-    shiny,
-    shinydashboard,
     shinyWidgets,
-    shinyFiles,
     stringr,
-    viridis,
     scCustFx,
     CellMembrane
 Suggests:
@@ -39,4 +46,5 @@ Suggests:
 Remotes:
     eisascience/scCustFx,
     bimberlabinternal/CellMembrane
+    mojaveazure/seurat-disk
     
