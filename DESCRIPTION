@@ -45,6 +45,6 @@ Suggests:
     devtools
 Remotes:
     eisascience/scCustFx,
-    bimberlabinternal/CellMembrane
+    bimberlabinternal/CellMembrane,
     mojaveazure/seurat-disk
     
